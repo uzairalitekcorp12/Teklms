@@ -1,0 +1,2 @@
+.registration-delete{margin-right:auto}
+@media(max-width:540px){.modal-box>footer:has(.registration-delete){flex-wrap:wrap}.registration-delete{margin-right:0;flex-basis:100%}.registration-delete~button{flex:1;min-width:0}}

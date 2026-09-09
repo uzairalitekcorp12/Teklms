@@ -1,0 +1,10 @@
+"use client";
+import {useEffect,useMemo,useState} from 'react';
+import {useSearchParams} from 'next/navigation';
+import {ArrowRight,CheckCircle2,ShieldCheck,UserPlus} from 'lucide-react';
+import {useLmsStore} from '@/app/state/LmsStore';
+import './RegistrationImportPage.css';
+function decode(token){try{let p=token.split('.')[0].replace(/-/g,'+').replace(/_/g,'/');p+= '='.repeat((4-p.length%4)%4);return JSON.parse(atob(p))}catch{return null}}
+export default function RegistrationImportPage(){const params=useSearchParams();const token=params.get('token')||'';const payload=useMemo(()=>decode(token),[token]);const{submitRegistration}=useLmsStore();const[state,setState]=useState('working');
+ useEffect(()=>{if(!payload||payload.type!=='registration'||!payload.requestId){setState('invalid');return}submitRegistration({...payload,registrationToken:token,status:'Pending'});setState('ready')},[payload,token,submitRegistration]);
+ return <main className="registration-import-page"><section><img src="/assets/teklms-logo.svg" alt="TekLMS"/>{state==='ready'?<><span className="import-icon"><CheckCircle2/></span><div className="import-kicker"><ShieldCheck/> Verified registration</div><h1>{payload?.name} is ready for review.</h1><p>The student request has been added to this browser’s TekLMS administrator workspace. Sign in and open Registrations to assign the class and courses.</p><div className="import-details"><div><small>Email</small><b>{payload?.email}</b></div><div><small>Requested class</small><b>{payload?.requestedGrade}</b></div><div><small>Request</small><b>{payload?.requestId}</b></div></div><a href="/login">Continue to administrator sign in <ArrowRight/></a></>:state==='invalid'?<><span className="import-icon muted"><ShieldCheck/></span><h1>This registration link is unavailable.</h1><p>The link may have expired or the request information is incomplete.</p><a href="/login">Return to sign in <ArrowRight/></a></>:<><span className="import-icon"><UserPlus/></span><h1>Preparing the registration request…</h1></>}</section></main>}

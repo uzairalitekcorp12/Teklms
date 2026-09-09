@@ -1,0 +1,28 @@
+"use client";
+import {useCallback,useEffect,useRef,useState} from 'react';
+import {Expand,LoaderCircle,LockKeyhole,Pause,Play,ShieldCheck,Volume2,VolumeX} from 'lucide-react';
+import './SecureVideoPlayer.css';
+const fmt=value=>{if(!Number.isFinite(value))return '00:00';const m=Math.floor(value/60);const s=Math.floor(value%60);return `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`};
+export default function SecureVideoPlayer({lecture,identity='Student Account · ST-0010',onProgress}){
+ const videoRef=useRef(null),wrapRef=useRef(null),lastReport=useRef(-1);const[src,setSrc]=useState('');const[loading,setLoading]=useState(true);const[error,setError]=useState('');const[playing,setPlaying]=useState(false);const[current,setCurrent]=useState(0);const[duration,setDuration]=useState(0);const[muted,setMuted]=useState(false);const[guarded,setGuarded]=useState(false);const[notice,setNotice]=useState('');const[markPos,setMarkPos]=useState(0);const[stamp,setStamp]=useState('');
+ const report=useCallback((force=false)=>{const video=videoRef.current;if(!video||!video.duration)return;const pct=Math.round(video.currentTime/video.duration*100);if(force||Math.abs(pct-lastReport.current)>=5){lastReport.current=pct;onProgress?.(pct)}},[onProgress]);
+ useEffect(()=>{let alive=true,blob='';setLoading(true);setError('');setSrc('');fetch(`/api/secure-media/${lecture.id}`,{credentials:'same-origin',cache:'no-store'}).then(async r=>{if(!r.ok)throw new Error((await r.json().catch(()=>({}))).message||'Unable to open this lecture.');return r.blob()}).then(file=>{if(!alive)return;blob=URL.createObjectURL(file);setSrc(blob);setLoading(false)}).catch(e=>{if(alive){setError(e.message);setLoading(false)}});return()=>{alive=false;if(blob)URL.revokeObjectURL(blob)}},[lecture.id]);
+ useEffect(()=>{const update=()=>setStamp(new Date().toLocaleString([], {hour:'2-digit',minute:'2-digit',second:'2-digit'}));update();const a=setInterval(()=>setMarkPos(p=>(p+1)%6),9000);const b=setInterval(update,1000);return()=>{clearInterval(a);clearInterval(b)}},[]);
+ useEffect(()=>{const show=(message)=>{setNotice(message);setGuarded(true);videoRef.current?.pause();setTimeout(()=>{setNotice('');if(document.visibilityState==='visible'&&document.hasFocus())setGuarded(false)},1400)};const key=e=>{const k=e.key.toLowerCase();const blocked=e.key==='PrintScreen'||e.key==='F12'||((e.ctrlKey||e.metaKey)&&(k==='s'||k==='u'))||(e.ctrlKey&&e.shiftKey&&['i','j','c'].includes(k));if(blocked){e.preventDefault();e.stopPropagation();show('Protected playback controls are active.')}};const visibility=()=>{if(document.visibilityState!=='visible'&&lecture.focusGuard!==false){setGuarded(true);videoRef.current?.pause()}else if(!notice)setGuarded(false)};const blur=()=>{if(lecture.focusGuard!==false){setGuarded(true);videoRef.current?.pause()}};const focus=()=>{if(document.visibilityState==='visible'&&!notice)setGuarded(false)};window.addEventListener('keydown',key,true);document.addEventListener('visibilitychange',visibility);window.addEventListener('blur',blur);window.addEventListener('focus',focus);return()=>{window.removeEventListener('keydown',key,true);document.removeEventListener('visibilitychange',visibility);window.removeEventListener('blur',blur);window.removeEventListener('focus',focus)}},[lecture.focusGuard,notice]);
+ const toggle=()=>{const v=videoRef.current;if(!v||guarded)return;v.paused?v.play():v.pause()};const seek=e=>{const v=videoRef.current;if(!v||!duration)return;v.currentTime=Number(e.target.value)/100*duration};const mute=()=>{const v=videoRef.current;if(!v)return;v.muted=!v.muted;setMuted(v.muted)};const full=()=>wrapRef.current?.requestFullscreen?.();
+ return <div ref={wrapRef} className={`secure-player ${guarded?'is-guarded':''}`} onContextMenu={e=>e.preventDefault()} onDragStart={e=>e.preventDefault()}>
+   <div className="secure-player-stage">
+    {loading&&<div className="secure-player-state"><LoaderCircle className="spin"/><b>Opening protected lecture</b><span>Preparing your secure playback session…</span></div>}
+    {error&&<div className="secure-player-state error"><LockKeyhole/><b>Lecture unavailable</b><span>{error}</span></div>}
+    {src&&<video ref={videoRef} src={src} playsInline preload="metadata" disablePictureInPicture controlsList="nodownload noremoteplayback" onPlay={()=>setPlaying(true)} onPause={()=>{setPlaying(false);report(true)}} onLoadedMetadata={e=>setDuration(e.currentTarget.duration)} onTimeUpdate={e=>{setCurrent(e.currentTarget.currentTime);report(false)}} onEnded={()=>{setPlaying(false);onProgress?.(100)}} onClick={toggle}/>} 
+    {lecture.watermark!==false&&src&&<div className={`secure-watermark pos-${markPos}`}><ShieldCheck/><span>{identity}</span><i>{stamp}</i></div>}
+    {guarded&&<div className="secure-guard"><ShieldCheck/><b>{notice||'Protected playback paused'}</b><span>{notice?'This shortcut is restricted during a protected lecture.':'Return to this window to continue your lecture.'}</span></div>}
+    <div className="secure-badge"><LockKeyhole/> Encrypted session</div>
+   </div>
+   <div className="secure-controls">
+     <button onClick={toggle} aria-label={playing?'Pause':'Play'}>{playing?<Pause/>:<Play/>}</button>
+     <span className="secure-time">{fmt(current)}</span><input className="secure-seek" aria-label="Lecture progress" type="range" min="0" max="100" step=".1" value={duration?current/duration*100:0} onChange={seek}/><span className="secure-time">{fmt(duration)}</span>
+     <button onClick={mute} aria-label={muted?'Unmute':'Mute'}>{muted?<VolumeX/>:<Volume2/>}</button><button onClick={full} aria-label="Full screen"><Expand/></button>
+   </div>
+  </div>
+}

@@ -1,0 +1,9 @@
+<svg width="240" height="62" viewBox="0 0 240 62" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs><linearGradient id="g" x1="0" y1="0" x2="62" y2="62" gradientUnits="userSpaceOnUse"><stop stop-color="#1F7A4E"/><stop offset="1" stop-color="#57C88A"/></linearGradient></defs>
+  <rect width="62" height="62" rx="17" fill="#14231C" stroke="#294538"/>
+  <path d="M11 24.5L31 15L51 24.5L31 34L11 24.5Z" fill="url(#g)"/>
+  <path d="M18 29.5V39.5C24.8 44.4 37.2 44.4 44 39.5V29.5L31 35.8L18 29.5Z" fill="#ECF8F1"/>
+  <path d="M51 25V39" stroke="#57C88A" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="51" cy="42" r="3" fill="#57C88A"/>
+  <text x="75" y="40" fill="#F3FFF7" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="800">TekLMS</text>
+</svg>

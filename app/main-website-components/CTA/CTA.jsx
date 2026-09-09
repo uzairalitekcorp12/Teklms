@@ -1,0 +1,2 @@
+import Link from 'next/link';import {ArrowRight,Sparkles} from 'lucide-react';import './CTA.css';
+export default function CTA(){return <section className="cta" id="contact"><div className="container"><div className="cta-box reveal"><div className="cta-spark"><Sparkles/></div><div><div className="eyebrow">Ready to work smarter?</div><h2>Bring academics, students, fees and learning into one professional system.</h2><p>Sign in to TekLMS and continue directly to your workspace.</p></div><Link href="/login">Open TekLMS <ArrowRight/></Link></div></div></section>}

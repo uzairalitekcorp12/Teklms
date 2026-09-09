@@ -1,0 +1,18 @@
+.receipt-brand>strong{margin-left:auto;color:var(--ink);font-size:13px;letter-spacing:.04em}.receipt-actions{display:grid;grid-template-columns:auto 1fr;gap:9px;margin-top:18px}.receipt-actions .receipt-download{width:100%;margin:0}.receipt-print-note{display:none;color:#5b675f;font-size:11px;line-height:1.5;margin-top:18px;padding-top:14px;border-top:1px dashed #cbd5ce}
+@media(max-width:420px){.receipt-brand{align-items:flex-start}.receipt-brand>strong{grid-column:1/-1}.receipt-actions{grid-template-columns:1fr}}
+@media print{
+ @page{size:A4;margin:18mm}
+ body.printing-receipt{background:#fff!important}
+ body.printing-receipt *{visibility:hidden!important}
+ body.printing-receipt .print-receipt,body.printing-receipt .print-receipt *{visibility:visible!important}
+ body.printing-receipt .print-receipt{position:fixed;inset:0;width:100%;max-width:760px;height:auto;margin:0 auto;padding:28px;background:#fff!important;color:#111!important;box-shadow:none!important}
+ body.printing-receipt .drawer-layer{position:static;background:none!important;backdrop-filter:none}
+ body.printing-receipt .receipt-brand b,body.printing-receipt .receipt-brand strong,body.printing-receipt .detail-row b{color:#111!important}
+ body.printing-receipt .receipt-brand span,body.printing-receipt .detail-row span{color:#59645d!important}
+ body.printing-receipt .receipt-status{color:#126a3f!important;background:#e8f6ed!important;border:1px solid #bfe1cc}
+ body.printing-receipt .detail-list{border-color:#dfe6e1!important;background:#fff!important}
+ body.printing-receipt .detail-row{border-color:#dfe6e1!important}
+ body.printing-receipt .receipt-actions{display:none!important}
+ body.printing-receipt .receipt-print-note{display:block!important;visibility:visible!important}
+ body.printing-receipt .global-media-privacy{display:none!important}
+}

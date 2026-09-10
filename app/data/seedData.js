@@ -9,8 +9,8 @@ export const initialStudents = Array.from({length:96},(_,i)=>({
   name:i===9?'Student Account':`${firstNames[i%firstNames.length]} ${lastNames[(i*5)%lastNames.length]}`,
   className:i===9?'Grade 10':`Grade ${8+(i%5)}`,
   section:i===9?'A':['A','B','C'][i%3],
-  email:i===9?'student@teklms.edu':`student${i+1}@teklms.edu`,
-  phone:`+92 3${String(10+(i%89)).padStart(2,'0')} ${String(1000000+i*731).slice(-7)}`,
+  email:i===9?'muhammad.17388.ac@iqra.edu.pk':`student${i+1}@teklms.edu`,
+  phone:i===9?'+923282626204':`+92 3${String(10+(i%89)).padStart(2,'0')} ${String(1000000+i*731).slice(-7)}`,
   guardian:`${firstNames[(i+7)%firstNames.length]} ${lastNames[(i*3)%lastNames.length]}`,
   attendance:82+(i%17),
   score:66+(i*7)%33,
@@ -68,7 +68,7 @@ export const initialMessages = [
 ];
 
 export const courses = [
-  {code:'MTH-201',title:'Mathematics II',teacher:'Ms. Hira Khan',progress:74,color:'blue',next:'Calculus · Tue, 10:30 AM',lessons:24,completed:18,description:'Functions, calculus foundations, analytical geometry and problem solving.',resources:['Chapter 6 Notes','Practice Set 12','Formula Sheet']},
+  {code:'MTH-201',title:'Mathematics II',teacher:'Ms. Hira Khan',progress:74,color:'teal',next:'Problem solving · Tue, 10:30 AM',lessons:24,completed:18,description:'Functions, analytical geometry, mathematical modelling and problem solving.',resources:['Chapter 6 Notes','Practice Set 12','Formula Sheet']},
   {code:'PHY-210',title:'Physics',teacher:'Mr. Usman Ali',progress:61,color:'violet',next:'Waves · Wed, 9:00 AM',lessons:21,completed:13,description:'Mechanics, waves, energy, electricity and practical laboratory concepts.',resources:['Waves Lab Guide','Numericals Pack','Motion Revision']},
   {code:'CSC-220',title:'Computer Science',teacher:'Mr. Bilal Raza',progress:88,color:'green',next:'Arrays · Thu, 12:00 PM',lessons:25,completed:22,description:'Programming logic, data structures, web fundamentals and computational thinking.',resources:['Array Exercises','Logic Worksheet','Project Brief']},
   {code:'ENG-205',title:'English Language',teacher:'Ms. Sara Ahmed',progress:79,color:'orange',next:'Writing · Fri, 11:15 AM',lessons:19,completed:15,description:'Reading, writing, grammar, presentation and communication practice.',resources:['Essay Framework','Grammar Review','Reading Pack']},
@@ -96,7 +96,7 @@ export const timetable = {
 };
 
 export const adminModules = [
-  {key:'dashboard',label:'Dashboard'}, {key:'academic',label:'Academic'}, {key:'lectures',label:'Lectures'}, {key:'liveSessions',label:'Live Sessions'}, {key:'registrations',label:'Registrations'}, {key:'students',label:'Students'}, {key:'administration',label:'Administration'}, {key:'accounts',label:'Accounts'}, {key:'whatsapp',label:'WhatsApp'}, {key:'reports',label:'Reports'}, {key:'settings',label:'Settings'}
+  {key:'dashboard',label:'Dashboard'}, {key:'academic',label:'Academic'}, {key:'lectures',label:'Lectures'}, {key:'liveSessions',label:'Live Sessions'}, {key:'registrations',label:'Registrations'}, {key:'students',label:'Students'}, {key:'administration',label:'Administration'}, {key:'accounts',label:'Accounts'}, {key:'whatsapp',label:'Communication'}, {key:'reports',label:'Reports'}, {key:'settings',label:'Settings'}
 ];
 
 export const studentModules = [
@@ -131,6 +131,9 @@ export const defaultSettings = {
   feeReminders:true,
   weeklySummary:true,
   profileVisibility:true,
+  glassEffects:true,
+  gradientText:true,
+  workspaceDensity:'comfortable',
   mediaContextProtection:true,
   mediaDragProtection:true,
   shortcutProtection:true,
@@ -143,15 +146,15 @@ export const defaultProfile = {
   name:'Student Account',
   id:'ST-0010',
   grade:'Grade 10 — Section A',
-  email:'student@teklms.edu',
-  phone:'+92 300 1234567',
+  email:'muhammad.17388.ac@iqra.edu.pk',
+  phone:'+923282626204',
   address:'Karachi, Pakistan',
   guardian:'Mr. Ahmed Khan',
   courseCodes:['MTH-201','PHY-210','CSC-220','ENG-205']
 };
 
 export const initialLectures = [
-  {id:'LEC-001',courseCode:'MTH-201',course:'Mathematics II',title:'Calculus Foundations',lesson:8,teacher:'Ms. Hira Khan',duration:'18 min',status:'Published',published:'Sep 09, 2026',audience:'Grade 10 — A',description:'Understand limits visually and connect slope with rate of change before moving into derivatives.',progress:68,completed:false,secure:true,watermark:true,focusGuard:true,poster:'https://images.pexels.com/photos/6238048/pexels-photo-6238048.jpeg?auto=compress&cs=tinysrgb&w=1200'},
+  {id:'LEC-001',courseCode:'MTH-201',course:'Mathematics II',title:'Problem-Solving Roadmap',lesson:8,teacher:'Ms. Hira Khan',duration:'18 min',status:'Published',published:'Sep 09, 2026',audience:'Grade 10 — A',audienceScope:'course',description:'Build a clear approach for translating mathematical questions into accurate, well-explained solutions.',progress:68,completed:false,secure:true,watermark:true,focusGuard:true,poster:'https://images.pexels.com/photos/6238048/pexels-photo-6238048.jpeg?auto=compress&cs=tinysrgb&w=1200'},
   {id:'LEC-002',courseCode:'MTH-201',course:'Mathematics II',title:'Functions and Graph Behaviour',lesson:7,teacher:'Ms. Hira Khan',duration:'24 min',status:'Published',published:'Sep 07, 2026',audience:'Grade 10 — A',description:'Read, compare and interpret functions through graph transformations and domain-range analysis.',progress:100,completed:true,secure:true,watermark:true,focusGuard:true,poster:'https://images.pexels.com/photos/6238050/pexels-photo-6238050.jpeg?auto=compress&cs=tinysrgb&w=1200'},
   {id:'LEC-003',courseCode:'PHY-210',course:'Physics',title:'Waves: Frequency and Amplitude',lesson:6,teacher:'Mr. Usman Ali',duration:'21 min',status:'Published',published:'Sep 08, 2026',audience:'Grade 10 — A',description:'A practical introduction to wave properties, frequency, amplitude and measurement.',progress:42,completed:false,secure:true,watermark:true,focusGuard:true,poster:'https://images.pexels.com/photos/60582/newton-s-cradle-balls-sphere-action-60582.jpeg?auto=compress&cs=tinysrgb&w=1200'},
   {id:'LEC-004',courseCode:'CSC-220',course:'Computer Science',title:'Arrays and Indexing',lesson:10,teacher:'Mr. Bilal Raza',duration:'27 min',status:'Published',published:'Sep 08, 2026',audience:'Grade 10 — A',description:'Build a strong mental model for arrays, indexes, traversal and common data operations.',progress:15,completed:false,secure:true,watermark:true,focusGuard:true,poster:'https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&w=1200'},
@@ -160,7 +163,7 @@ export const initialLectures = [
   {id:'LEC-007',courseCode:'PST-206',course:'Pakistan Studies',title:'Constitutional Development',lesson:6,teacher:'Mr. Ahmed Shah',duration:'25 min',status:'Published',published:'Sep 04, 2026',audience:'Grade 10 — A',description:'Trace major constitutional milestones and the ideas that shaped institutional development.',progress:0,completed:false,secure:true,watermark:true,focusGuard:true,poster:'https://images.pexels.com/photos/159832/justice-law-case-hearing-159832.jpeg?auto=compress&cs=tinysrgb&w=1200'},
   {id:'LEC-008',courseCode:'PHY-210',course:'Physics',title:'Energy and Work',lesson:7,teacher:'Mr. Usman Ali',duration:'22 min',status:'Scheduled',published:'Sep 11, 2026',audience:'Grade 10 — A',description:'Connect work, kinetic energy and potential energy through worked numerical examples.',progress:0,completed:false,secure:true,watermark:true,focusGuard:true,poster:'https://images.pexels.com/photos/2150/sky-space-dark-galaxy.jpg?auto=compress&cs=tinysrgb&w=1200'},
   {id:'LEC-009',courseCode:'CSC-220',course:'Computer Science',title:'Searching Collections',lesson:11,teacher:'Mr. Bilal Raza',duration:'28 min',status:'Scheduled',published:'Sep 12, 2026',audience:'Grade 10 — A',description:'Compare linear and binary search and learn when each approach is appropriate.',progress:0,completed:false,secure:true,watermark:true,focusGuard:true,poster:'https://images.pexels.com/photos/577585/pexels-photo-577585.jpeg?auto=compress&cs=tinysrgb&w=1200'},
-  {id:'LEC-010',courseCode:'MTH-201',course:'Mathematics II',title:'Introduction to Derivatives',lesson:9,teacher:'Ms. Hira Khan',duration:'31 min',status:'Scheduled',published:'Sep 13, 2026',audience:'Grade 10 — A',description:'Move from limits to derivative notation, interpretation and first-principles examples.',progress:0,completed:false,secure:true,watermark:true,focusGuard:true,poster:'https://images.pexels.com/photos/6238048/pexels-photo-6238048.jpeg?auto=compress&cs=tinysrgb&w=1200'},
+  {id:'LEC-010',courseCode:'MTH-201',course:'Mathematics II',title:'Mathematical Modelling Workshop',lesson:9,teacher:'Ms. Hira Khan',duration:'31 min',status:'Scheduled',published:'Sep 13, 2026',audience:'Grade 10 — A',audienceScope:'course',description:'Translate real situations into mathematical models and evaluate solutions with worked examples.',progress:0,completed:false,secure:true,watermark:true,focusGuard:true,poster:'https://images.pexels.com/photos/6238048/pexels-photo-6238048.jpeg?auto=compress&cs=tinysrgb&w=1200'},
   {id:'LEC-011',courseCode:'ENG-205',course:'English Language',title:'Evidence and Analysis',lesson:6,teacher:'Ms. Sara Ahmed',duration:'20 min',status:'Published',published:'Sep 03, 2026',audience:'Grade 10 — A',description:'Use textual evidence accurately and build analysis that explains why the evidence matters.',progress:35,completed:false,secure:true,watermark:true,focusGuard:false,poster:'https://images.pexels.com/photos/159711/books-bookstore-book-reading-159711.jpeg?auto=compress&cs=tinysrgb&w=1200'},
   {id:'LEC-012',courseCode:'BIO-208',course:'Biology',title:'Genetics: Core Vocabulary',lesson:8,teacher:'Ms. Noor Siddiqui',duration:'26 min',status:'Published',published:'Sep 02, 2026',audience:'Grade 10 — A',description:'Master genes, alleles, genotype, phenotype and the language used in inheritance questions.',progress:100,completed:true,secure:true,watermark:true,focusGuard:true,poster:'https://images.pexels.com/photos/3735747/pexels-photo-3735747.jpeg?auto=compress&cs=tinysrgb&w=1200'}
 ];

@@ -1,0 +1,75 @@
+:root{
+  --brand:#0f8f83;
+  --brand-deep:#08675f;
+  --brand-2:#22b8a8;
+  --brand-soft:#e5f7f4;
+  --brand-border:#ace1da;
+  --success:#0f8f83;
+  --success-soft:#e5f7f4;
+  --heading-gradient:linear-gradient(112deg,var(--ink) 5%,var(--brand-deep) 54%,var(--brand-2) 100%);
+}
+html[data-theme="dark"]{
+  --page:#020706;
+  --ink:#f2fffc;
+  --ink-2:#c8ded9;
+  --muted:#8da8a2;
+  --muted-2:#6d8983;
+  --line:#12302c;
+  --line-strong:#1a413b;
+  --surface:#07110f;
+  --surface-2:#091815;
+  --surface-3:#0d211d;
+  --surface-elevated:#0b1b18;
+  --sidebar:#010504;
+  --sidebar-2:#061310;
+  --sidebar-muted:#83a099;
+  --brand:#2dd4bf;
+  --brand-deep:#6ee7d7;
+  --brand-2:#5eead4;
+  --brand-soft:rgba(45,212,191,.11);
+  --brand-border:rgba(45,212,191,.3);
+  --success:#2dd4bf;
+  --success-soft:rgba(45,212,191,.11);
+  --heading-gradient:linear-gradient(112deg,#ffffff 5%,#b9fff4 48%,#2dd4bf 100%);
+}
+body{position:relative;background-image:radial-gradient(circle at 10% 0,color-mix(in srgb,var(--brand) 7%,transparent),transparent 31%),radial-gradient(circle at 96% 88%,color-mix(in srgb,var(--brand-2) 6%,transparent),transparent 34%);background-attachment:fixed}
+html:not([data-gradient="off"]) .page-heading h1,
+html:not([data-gradient="off"]) .student-page-heading h1,
+html:not([data-gradient="off"]) .section-title,
+html:not([data-gradient="off"]) .hero-copy h1 span{
+  background:var(--heading-gradient);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent!important;
+}
+html[data-glass="on"] .portal-card,
+html[data-glass="on"] .stat-card,
+html[data-glass="on"] .live-compose-card,
+html[data-glass="on"] .live-preview-card,
+html[data-glass="on"] .live-history-card,
+html[data-glass="on"] .student-lecture-library,
+html[data-glass="on"] .settings-panel,
+html[data-glass="on"] .settings-nav{
+  background:color-mix(in srgb,var(--surface) 88%,transparent)!important;
+  backdrop-filter:blur(18px) saturate(1.08);
+  -webkit-backdrop-filter:blur(18px) saturate(1.08);
+  border-color:color-mix(in srgb,var(--brand-border) 55%,var(--line))!important;
+  box-shadow:var(--shadow-card)!important;
+}
+.portal-card,.stat-card,.course-card-v3,.student-lecture-card,.feature-card{transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease,background .25s ease}
+.portal-card:hover,.stat-card:hover{border-color:color-mix(in srgb,var(--brand-border) 70%,var(--line))}
+.course-cover-v3,.course-cover-v3.c-1,.course-cover-v3.c-2,.course-cover-v3.c-3,.course-cover-v3.c-4,.course-cover-v3.c-5{background:linear-gradient(135deg,#064e49,#0f8f83 58%,#35cdbb)!important}
+.chart-bars button i,.monthly-bars em{background:linear-gradient(180deg,var(--brand-2),var(--brand-deep))!important}
+.announcement-item-v3.unread{border-color:var(--brand-border)!important;background:linear-gradient(90deg,var(--brand-soft),var(--surface))!important}
+.roles{background:#03100e!important}.roles:before{background:radial-gradient(circle at 15% 10%,rgba(45,212,191,.2),transparent 32%),radial-gradient(circle at 85% 90%,rgba(15,143,131,.16),transparent 36%)!important}
+.cta-box{background:linear-gradient(125deg,#020807,#07322d)!important}
+.settings-save-bar{background:var(--surface-2)!important;color:var(--ink-2)!important}
+.student-welcome,.profile-cover-v3{background:linear-gradient(125deg,#02100e,var(--brand-deep) 54%,var(--brand))!important;box-shadow:0 18px 45px color-mix(in srgb,var(--brand) 16%,transparent)!important}
+.student-welcome button{color:var(--brand-deep)!important}.profile-avatar-v3:after{background:linear-gradient(145deg,var(--brand-deep),var(--brand-2))!important}
+.quick-card,.admin-view .search-field input,.student-section-title>b,.resource-list>button{color:var(--ink-2)!important}
+html[data-theme="dark"] .hero{background:linear-gradient(180deg,#020706 0%,#071310 88%)!important}
+html[data-theme="dark"] .lecture-hero-student{background:linear-gradient(115deg,#010504 0%,#064e49 60%,#0f766e 100%)}
+html[data-density="compact"] .portal-content{padding-top:20px}
+html[data-density="compact"] .portal-card,html[data-density="compact"] .stat-card{border-radius:13px}
+html[data-density="compact"] .data-table td{padding-top:8px;padding-bottom:8px}
+@media(max-width:620px){html[data-glass="on"] .portal-card,html[data-glass="on"] .stat-card{backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}}

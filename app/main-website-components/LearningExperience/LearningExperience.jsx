@@ -1,4 +1,4 @@
-import {CheckCircle2,Layers3,Clock3,UsersRound} from 'lucide-react';
+import {Activity,CheckCircle2,Layers3,Clock3,UsersRound} from 'lucide-react';
 import {pexels} from '@/app/data/seedData';
 import './LearningExperience.css';
 
@@ -8,7 +8,7 @@ export default function LearningExperience(){
       <div className="learning-visual reveal">
         <figure className="learning-image main-photo"><img src={pexels.classroom} alt="Students studying in a classroom"/></figure>
         <figure className="learning-image sub-photo"><img src={pexels.teamwork} alt="Students collaborating around laptops"/></figure>
-        <div className="learning-float"><div className="avatars"><span>SA</span><span>HK</span><span>AR</span><span>+24</span></div><div><b>Students stay connected</b><small>Courses, updates and records in one portal</small></div></div>
+        <div className="learning-float"><div className="learning-signal"><span className="learning-signal-icon"><Activity/></span><span className="learning-signal-bars"><i></i><i></i><i></i><i></i></span><small>LIVE</small></div><div><b>Students stay connected</b><small>Courses, updates and records in one portal</small></div></div>
       </div>
       <div className="learning-copy reveal" data-delay="2">
         <div className="eyebrow">Designed around real learning</div>

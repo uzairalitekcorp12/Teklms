@@ -20,9 +20,17 @@ const defaults={schemaVersion:6,students:initialStudents,classes:initialClasses,
 function mergeSavedState(saved,activated=[]){
  const base=clone(defaults);
  const parsed=saved&&typeof saved==='object'?saved:{};
+ // Apply the contact update once; subsequent administrator edits remain editable.
+ if(!parsed.studentContactRevision){
+  const contact={email:base.profile.email,phone:base.profile.phone};
+  if(Array.isArray(parsed.students))parsed.students=parsed.students.map(student=>student.id==='ST-0010'?{...student,...contact}:student);
+  if(parsed.profile?.id==='ST-0010')parsed.profile={...parsed.profile,...contact};
+  parsed.studentContactRevision=1;
+ }
  if(Array.isArray(parsed.students))parsed.students=parsed.students.map(student=>{const seed=base.students.find(row=>row.id===student.id);return {...seed,...student,courseCodes:student.courseCodes||seed?.courseCodes||[]}});
+ if(Array.isArray(parsed.lectures))parsed.lectures=parsed.lectures.map(lecture=>lecture.title==='Calculus Foundations'?{...lecture,title:'Problem-Solving Roadmap',description:'Build a clear approach for translating mathematical questions into accurate, well-explained solutions.',audienceScope:lecture.audienceScope||'course'}:lecture);
  const approved=[...(Array.isArray(parsed.approvedAccounts)?parsed.approvedAccounts:[]),...(Array.isArray(activated)?activated:[])].filter((item,index,rows)=>item?.email&&rows.findIndex(row=>row.email===item.email)===index);
- return {...base,...parsed,schemaVersion:6,approvedAccounts:approved,liveSessions:Array.isArray(parsed.liveSessions)?parsed.liveSessions:base.liveSessions,notifications:Array.isArray(parsed.notifications)?parsed.notifications:base.notifications,pendingRegistrations:Array.isArray(parsed.pendingRegistrations)?parsed.pendingRegistrations:[]};
+ return {...base,...parsed,schemaVersion:6,settings:{...base.settings,...(parsed.settings||{})},approvedAccounts:approved,liveSessions:Array.isArray(parsed.liveSessions)?parsed.liveSessions:base.liveSessions,notifications:Array.isArray(parsed.notifications)?parsed.notifications:base.notifications,pendingRegistrations:Array.isArray(parsed.pendingRegistrations)?parsed.pendingRegistrations:[]};
 }
 
 export function LmsStoreProvider({children}){
@@ -48,6 +56,7 @@ export function LmsStoreProvider({children}){
   addPayment:item=>patch('payments',rows=>[{...item,id:nextId(rows,'PAY',4),receipt:`RC-${Date.now().toString().slice(-6)}`},...rows]),
   deletePayment:id=>patch('payments',rows=>rows.filter(row=>row.id!==id)),
   addMessage:item=>patch('messages',rows=>[{...item,id:`MSG-${Date.now()}`},...rows]),
+  deleteMessage:id=>patch('messages',rows=>rows.filter(row=>row.id!==id)),
   addAnnouncement:item=>patch('announcements',rows=>[{...item,id:`ANN-${Date.now()}`,read:false},...rows]),
   deleteAnnouncement:id=>patch('announcements',rows=>rows.filter(row=>row.id!==id)),
   markAnnouncementRead:id=>patch('announcements',rows=>rows.map(item=>item.id===id?{...item,read:true}:item)),

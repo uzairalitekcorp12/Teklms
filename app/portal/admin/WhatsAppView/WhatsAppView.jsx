@@ -37,7 +37,7 @@ export default function WhatsAppView(){
   const[sending,setSending]=useState(false);
   const publicSender=process.env.NEXT_PUBLIC_WHATSAPP_NUMBER||'923102218298';
   const[providerStatus,setProviderStatus]=useState(null);
-  useEffect(()=>{let active=true;fetch('/api/communications/status').then(response=>response.ok?response.json():null).then(result=>{if(active)setProviderStatus(result)}).catch(()=>{});return()=>{active=false}},[]);
+  useEffect(()=>{let active=true;fetch('/api/communications/status',{credentials:'include'}).then(response=>response.ok?response.json():null).then(result=>{if(active)setProviderStatus(result)}).catch(()=>{});return()=>{active=false}},[]);
   const provider=providerStatus?.[channel==='Email'?'email':'whatsapp'];
 
   const classOptions=useMemo(()=>[...new Set(state.students.map(student=>student.className))].sort((a,b)=>a.localeCompare(b,undefined,{numeric:true})),[state.students]);
@@ -74,7 +74,7 @@ export default function WhatsAppView(){
     if(!selectedStudents.length)return toast('Select at least one reachable student.','info');
     setSending(true);
     try{
-      const response=await fetch(`/api/communications/${channel==='Email'?'email':'whatsapp'}`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({subject,message,recipients:selectedStudents.map(({id,name,email,phone})=>({id,name,email,phone}))})});
+      const response=await fetch(`/api/communications/${channel==='Email'?'email':'whatsapp'}`,{method:'POST',credentials:'include',headers:{'Content-Type':'application/json'},body:JSON.stringify({subject,message,recipients:selectedStudents.map(({id,name,email,phone})=>({id,name,email,phone}))})});
       const result=await response.json();
       if(!response.ok||!result.ok)throw new Error(result.message||'The provider did not accept the message.');
       addMessage({channel,recipient:audienceLabel,recipientCount:selectedStudents.length,recipientIds:selectedStudents.map(student=>student.id),message,subject:channel==='Email'?subject:'',status:result.status,sentAt:new Date().toLocaleString(),providerSent:result.sent,providerFailed:result.failed});

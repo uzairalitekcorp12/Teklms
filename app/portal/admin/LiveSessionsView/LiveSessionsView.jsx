@@ -48,8 +48,8 @@ export default function LiveSessionsView(){
     try{
       const response=await fetch('/api/live-links/send',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({title:form.title.trim(),courseTitle:course.title,courseCode:course.code,url:form.url.trim(),message:form.message.trim(),recipients:selectedStudents.map(s=>({id:s.id,name:s.name,email:s.email}))})});
       const data=await response.json();
-      if(response.ok)emailResult=data;
-      else toast(data?.message||'Email delivery could not be completed. Portal notifications will still be sent.','info');
+      emailResult=data;
+      if(!response.ok||!data.ok)toast(data?.message||'Email delivery could not be completed. Portal notifications will still be sent.','info');
     }catch{toast('Email delivery is currently unavailable. Portal notifications will still be sent.','info')}
     sendLiveSession({title:form.title.trim(),courseTitle:course.title,courseCode:course.code,className:classFilter,section:sectionFilter,url:form.url.trim(),message:form.message.trim(),recipientIds:selectedStudents.map(s=>s.id),recipientCount:selectedStudents.length,emailStatus:emailResult.emailConfigured?(emailResult.failed?'Partially sent':'Sent'):'Pending mail setup',emailSent:emailResult.sent||0,emailFailed:emailResult.failed||0});
     setForm(prev=>({...prev,title:'',url:''}));

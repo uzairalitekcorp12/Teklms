@@ -1,1 +1,1 @@
-@media(max-width:600px){.product-section .reveal{opacity:1;transform:none}}
+@media(max-width:600px){.product-window{box-shadow:0 24px 60px rgba(8,44,39,.14)}.preview-metrics article:last-child{display:none}}
